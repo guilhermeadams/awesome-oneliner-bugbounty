@@ -352,7 +352,7 @@ curl -s https://HOST/v2/swagger.json | jq '.paths | keys[]'
 > @manas_hunter
 
 ```bash
-site="URL"; gau "$site" | while read url; do target=$(curl -sIH "Origin: https://evil.com" -X GET $url) | if grep 'https://evil.com'; then [Potentional CORS Found] echo $url; else echo Nothing on "$url"; fi; done
+site="https://target.com"; ./gau "$site" | while read url; do target=$(curl -sIH "Origin: https://evil.com" -X GET "$url"); if grep -q 'https://evil.com' <<< "$target"; then echo "[Potential CORS Found] $url"; else echo "Nothing on $url"; fi; done
 ```
 
 ### Find Hidden Servers and/or Admin Panels
